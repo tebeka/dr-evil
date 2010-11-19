@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Dr. Evil Web Debugger</title>
+        <style>
+            body {
+                margin: 50px;
+                font-family: Monospace;
+            }
+            #log {
+                border: 3px solid black;
+                width: 100%;
+                height: 500px;
+                overflow: auto;
+            }
+            #entry {
+                width: 80em;
+            }
+            div.error {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Dr. Evil Web Debugger</h1>
+        <div id="log"></div>
+        <input id="entry" /> <button id="submit">Run</button>
+    </body>
+    <script
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">
+    </script>
+    <script
+        src="http://flesler-plugins.googlecode.com/files/jquery.scrollTo-1.4.2-min.js">
+    </script>
+    <script>
+        function on_run() {
+            var value = $.trim($('#entry').val());
+            if (value.length == 0) {
+                return;
+            }
+            var div = $('<div/>').text('=> ' + value);
+            $('#log').append(div);
+            $('#log').scrollTo(div);
+        }
+
+        function hook_enter_key(elem, handler) {
+            elem.keyup(function(e) {
+                if (e.keyCode == 13) {
+                    handler();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#submit').click(on_run);
+            hook_enter_key($('#entry'), on_run);
+        });
+    </script>
+</html>
