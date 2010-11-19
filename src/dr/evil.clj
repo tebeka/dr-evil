@@ -26,7 +26,9 @@
   (POST "/" {params :params} (evil params))
   (ANY "/*" [path] (redirect "/")))
 
-; HTML goes here
+; HTML goes here.
+; We embed the HTML in the clojure file so we won't have to muck around with
+; serving files from unknown locations
 (def *html* "<html>
     <head>
         <title>Dr. Evil Web Debugger</title>
