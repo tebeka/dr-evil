@@ -1,4 +1,6 @@
 (ns dr.evil
+  (:use compojure.core)
+  (:use ring.util.response)
   (:use [clojure.contrib.json :only (json-str)]))
 
 (defn input-page []
@@ -18,4 +20,4 @@
 (defroutes app
   (GET "/" [] (input-page))
   (POST "/" {params :params} (evil params))
-  (ANY "/*" [path] (redirect "/"))
+  (ANY "/*" [path] (redirect "/")))

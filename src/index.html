@@ -32,14 +32,37 @@
         src="http://flesler-plugins.googlecode.com/files/jquery.scrollTo-1.4.2-min.js">
     </script>
     <script>
-        function on_run() {
-            var value = $.trim($('#entry').val());
-            if (value.length == 0) {
-                return;
-            }
-            var div = $('<div/>').text('=> ' + value);
+        function append_log(div) {
             $('#log').append(div);
             $('#log').scrollTo(div);
+        }
+
+        function on_result(data) {
+            var div = $('<div/>');
+            if (data.error) {
+                div.attr('class', 'error');
+                if (data.result.length == 0) {
+                    data.result = "Unknown Error!";
+                }
+            }
+            div.text(data.result);
+            append_log(div);
+        }
+
+        function on_run() {
+            var expr = $.trim($('#entry').val());
+            if (expr.length == 0) {
+                return;
+            }
+            var div = $('<div/>').text('=> ' + expr);
+            append_log(div);
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: { "expr" : expr },
+                success: on_result,
+                dataType: 'json'
+            });
         }
 
         function hook_enter_key(elem, handler) {
