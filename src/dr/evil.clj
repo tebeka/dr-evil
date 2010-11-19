@@ -1,6 +1,5 @@
 (ns dr.evil
   (:use compojure.core)
-  (:use ring.util.response)
   (:use [clojure.stacktrace :only (print-stack-trace)])
   (:use [clojure.contrib.json :only (json-str)]))
 
@@ -19,17 +18,17 @@
 (defn evil [params]
   (json-str (eval-expr (params "expr"))))
 
-(declare *html*)
+(declare html)
 
-(defroutes app
-  (GET "/" [] *html*)
-  (POST "/" {params :params} (evil params))
-  (ANY "/*" [path] (redirect "/")))
+(defn EVIL [path]
+  (GET path [] (html path))
+  (POST path {params :params} (evil params)))
 
-; HTML goes here.
+; HTML goes here (this is at the end since it's long).
 ; We embed the HTML in the clojure file so we won't have to muck around with
 ; serving files from unknown locations
-(def *html* "<html>
+(defn html [path] 
+  (format "<html>
     <head>
         <title>Dr. Evil Web Debugger</title>
         <style>
@@ -102,7 +101,7 @@
             append_log(div);
             $.ajax({
                 type: 'POST',
-                url: '/',
+                url: '%s',
                 data: { \"expr\" : expr },
                 success: on_result,
                 dataType: 'json'
@@ -140,5 +139,5 @@
             $('#entry').keyup(on_entry_keyup).val('').focus();
         });
     </script>
-</html>")
+</html>" path))
 

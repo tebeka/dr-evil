@@ -1,5 +1,12 @@
 (ns dr.evil.run
-  (:require dr.evil)
-  (:use ring.adapter.jetty))
+  (:use dr.evil)
+  (:use compojure.core)
+  (:use ring.adapter.jetty)
+  (:require [compojure.route :as route]))
 
-(run-jetty #'dr.evil/app {:port 8080})
+(defroutes app
+  (GET "/" [] "NOTHING HERE! (try /evil)")
+  (EVIL "/evil")
+  (route/not-found "Dude! I can't find it."))
+
+(run-jetty app {:port 8080})
