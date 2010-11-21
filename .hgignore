@@ -1,5 +1,7 @@
-syntax glob
+syntax: glob
 
 lib
 classes
 README.html
+dr-evil-*.jar
+pom.xml
