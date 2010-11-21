@@ -16,7 +16,7 @@ Just include the EVIL macro inside your `defroutes`, for example::
 
 Screenshot
 ==========
-.. image:: screenshot.png
+.. image:: https://bitbucket.org/tebeka/dr-evil/raw/tip/screenshot.png
 
 License
 =======
