@@ -5,7 +5,7 @@
   (:require [compojure.route :as route]))
 
 (defroutes app
-  (GET "/" [] "NOTHING HERE! (try /evil)")
+  (GET "/" [] "Nothing here! (try /evil)")
   (EVIL "/evil")
   (route/not-found "Dude! I can't find it."))
 

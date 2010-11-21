@@ -15,14 +15,16 @@
       (let [result (with-out-str (print-stack-trace e))]
         { :result result :error true }))))
 
-(defn evil [params]
-  (json-str (eval-expr (params "expr"))))
-
+; html will come later since it's big
 (declare html)
 
-(defn EVIL [path]
-  (GET path [] (html path))
-  (POST path {params :params} (evil params)))
+(defn evil [path expr]
+  (if (nil? expr)
+    (html path)
+    (json-str (eval-expr expr))))
+
+(defmacro EVIL [path]
+  `(~'GET ~path {~'params :params} (evil ~path (~'params "expr"))))
 
 ; HTML goes here (this is at the end since it's long).
 ; We embed the HTML in the clojure file so we won't have to muck around with
@@ -100,7 +102,7 @@
             var div = $('<div/>').text('=> ' + expr);
             append_log(div);
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: '%s',
                 data: { \"expr\" : expr },
                 success: on_result,
