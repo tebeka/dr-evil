@@ -39,7 +39,7 @@
             #log {
                 font-family: Monospace;
                 border: 3px solid black;
-                width: 100%;
+                width: 100%%;
                 height: 500px;
                 overflow: auto;
             }
