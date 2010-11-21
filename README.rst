@@ -5,7 +5,6 @@ dr-evil
 Dr. Evil is a "web debugger". You add Dr. Evil at a secret path in your web
 application and you get a Clojure REPL on your running web application.
 
-
 Usage
 =====
 Just include the EVIL macro inside your `defroutes`, for example::
