@@ -27,6 +27,15 @@ Screenshot
 ==========
 .. image:: https://bitbucket.org/tebeka/dr-evil/raw/tip/screenshot.png
 
+FAQ
+===
+
+Q: Typing my.ns/foo is too much, how can I switch to my.ns?
+
+A: `(set-ns! "my.ns")`, when you want to switch back, you need to use the full
+name `(dr.evil/set-ns! "another.ns")`
+
+
 License
 =======
 
