@@ -3,13 +3,18 @@
   (:use [clojure.stacktrace :only (print-stack-trace)])
   (:use [clojure.contrib.json :only (json-str)]))
 
-; FIXME: Give use ability to change namespace
-(defn wrapped-expr [expr]
-  (str "(binding [*print-length* 100] " expr ")"))
+(def *user-ns* (atom *ns*))
+(defn set-ns! [new-ns]
+  (swap! *user-ns* (constantly (create-ns (symbol new-ns)))))
+
+(defn eval-in-user-ns [expr]
+  (binding [*ns* @*user-ns*]
+    (refer 'clojure.core)
+    (eval (read-string expr))))
 
 (defn eval-expr [expr]
   (try
-    (let [result (load-string (wrapped-expr expr))]
+    (let [result (eval-in-user-ns expr)]
       { :result (with-out-str (println result)) :error false })
     (catch Exception e
       (let [result (with-out-str (print-stack-trace e))]
