@@ -23,13 +23,11 @@
 ; html will come later since it's big
 (declare html)
 
-(defn evil [path expr]
-  (if (nil? expr)
-    (html path)
-    (json-str (eval-expr expr))))
-
-(defmacro EVIL [path]
-  `(~'GET ~path {~'params :params} (evil ~path (~'params "expr"))))
+(defn EVIL [path]
+  (GET path [expr]
+    (if (nil? expr)
+      (html path)
+      (json-str (eval-expr expr)))))
 
 ; HTML goes here (this is at the end since it's long).
 ; We embed the HTML in the clojure file so we won't have to muck around with
